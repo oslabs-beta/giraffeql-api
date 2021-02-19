@@ -1,0 +1,18 @@
+{
+  "name": "giraffeql-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node api/login.js",
+    "start": "node api/login.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.16",
+    "passport": "^0.4.1",
+    "passport-github": "^1.1.0"
+  }
+}
