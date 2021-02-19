@@ -27,4 +27,4 @@ app.use('/user', require('./routes/user'));
 app.use('/profile', require('./routes/profile'));
 
 // start server
-app.listen(3001, () => console.log("Server listening on http://localhost:3001"))
+app.listen(process.env.PORT || 3001, () => console.log("Server listening on http://localhost:3001"))

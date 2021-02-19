@@ -37,7 +37,8 @@ router.get(
     req.logIn(req.user, function(err) {
       console.log('req.user: ', req.user);
       if (err) return next(err); ;
-      res.redirect(`http://localhost:3000?token=${token}`)
+      const URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://giraffeql.io/';
+      res.redirect(`${URL}?token=${token}`)
     });
         
   },
