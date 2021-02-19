@@ -1,6 +1,14 @@
 // api/db/mongoose.js
 const mongoose = require('mongoose');
-const MONGO_URI = process.env.MONGO_URI;
+
+let MONGO_URI;
+
+if (process.env.NODE_ENV === 'development') {
+    const variables = require('../../settings.js');
+    MONGO_URI = variables.MONGO_URI;
+} else {
+    MONGO_URI = process.env.MONGO_URI;
+}
 
 mongoose.connect(MONGO_URI,
     {
