@@ -1,7 +1,15 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const userService = require('../db/services/user')
-const JWT_KEY = "giraffesarecool"
+const userService = require('../db/services/user');
+
+let JWT_KEY;
+
+if (process.env.NODE_ENV === 'development') {
+    const variables = require('../../settings.js');
+    JWT_KEY = variables.JWT_KEY;
+} else {
+    JWT_KEY = process.env.JWT_KEY;
+}
 
 const router = express()
 
@@ -20,7 +28,6 @@ router.use((req, res, next) => {
 
 router.get('/', async (req, res) => {
     user = await userService.findById(req.user.id)
-
     res.send(user);
 })
 

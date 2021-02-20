@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-require('./db/mongoose');
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
+const profileRouter = require('./routes/profile');
+const diagramsRouter = require('./routes/diagrams');
 
 const app = express();
 
@@ -22,9 +25,10 @@ passport.serializeUser(function (user, cb) {
   cb(null, user);
 });
 
-app.use('/auth', require('./routes/auth'));
-app.use('/user', require('./routes/user'));
-app.use('/profile', require('./routes/profile'));
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/profile', profileRouter);
+app.use('/diagrams', diagramsRouter);
 
 // global error handler --->
 app.use((err, req, res, next) => {
