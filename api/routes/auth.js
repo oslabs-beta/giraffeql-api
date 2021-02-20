@@ -3,21 +3,22 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const users = require('../db/services/user');
-const JWT_KEY = "giraffesarecool"
 
 const router = express();
 
-let GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL;
+let GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL, JWT_KEY;
 
 if (process.env.NODE_ENV === 'development') {
   const variables = require('../../settings.js');
   GITHUB_CLIENT_ID = variables.GITHUB_CLIENT_ID;
   GITHUB_CLIENT_SECRET = variables.GITHUB_CLIENT_SECRET;
   GITHUB_CALLBACK_URL = variables.GITHUB_CALLBACK_URL;
+  JWT_KEY = variables.JWT_KEY;
 } else {
   GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
   GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL;
+  JWT_KEY = process.env.JWT_KEY;
 }
 
 passport.use(new GitHubStrategy({
