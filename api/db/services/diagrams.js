@@ -43,20 +43,36 @@ module.exports = {
   },
   updateDiagram: (req, res, next) => {
     try {
-      const { diagramId, diagramName, reactFlowData } = req.body
-      Diagram.findOneAndUpdate(
-        { _id: diagramId },
-        {
+      const { diagramId, user, diagramName, reactFlowData } = req.body
+      console.log(diagramId);
+      if (diagramId) {
+        Diagram.findOneAndUpdate(
+          { _id: diagramId },
+          {
+            user: user,
+            diagramName: diagramName,
+            reactFlowData: reactFlowData
+          },
+          {
+            new: true,
+            upsert: true
+          })
+          .then((data) => {
+            res.locals.diagram = data;
+            return next();
+          })
+      } else {
+        const { user, diagramName, reactFlowData } = req.body;
+        Diagram.create({
+          user: user,
           diagramName: diagramName,
           reactFlowData: reactFlowData
-        },
-        {
-          new: true
-        })
-        .then((data) => {
+        }).then((data) => {
           res.locals.diagram = data;
           return next();
-        })
+        });
+      }
+      
     } catch(err) {
       return next(err);
     }
