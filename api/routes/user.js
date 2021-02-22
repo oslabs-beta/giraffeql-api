@@ -14,7 +14,10 @@ if (process.env.NODE_ENV === 'development') {
 const router = express()
 
 router.use((req, res, next) => {
-    const token = req.headers['authorization'];
+    console.log(req.cookies)
+    const token = req.headers['authorization'] //;req.cookies.authorization;
+    //= req.headers['authorization'];
+    console.log(token)
 
     jwt.verify(token, JWT_KEY, function (err, data) {
         if (err) {

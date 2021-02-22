@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
@@ -10,6 +11,7 @@ const app = express();
 
 // Parse json encoded in the request body
 app.use(bodyParser.json({ limit: '50mb' }));
+app.use(cookieParser());
 
 // allow cors from all - no hustle and never safe
 app.use((_, res, next) => {
