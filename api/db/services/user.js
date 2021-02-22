@@ -7,7 +7,13 @@ module.exports = {
       const user = await User.findOne({ oAuthId: oAuthData.id });
       if (!user) {
         console.log('no user found');
-        const newUser = new User({oAuthId: oAuthData.id, oAuthData: oAuthData});
+        const newUser = new User({
+          oAuthId: oAuthData.id, 
+          username: oAuthData.username,
+          displayName: oAuthData.displayName || '',
+          profileUrl: oAuthData.profileUrl,
+          photos: oAuthData.photos
+        });
         await newUser.save();
         return newUser;
       }
