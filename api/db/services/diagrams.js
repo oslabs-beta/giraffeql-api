@@ -18,9 +18,12 @@ module.exports = {
   },
   getAllDiagrams: (req, res, next) => {
     try {
-      const { user } = req.params;
+      let user = req.params.user || res.locals.user._id
+      console.log(user)
+      // const { user } = req.params || res.locals.user._id;
       Diagram.find({ user: user })
         .then((data) => {
+          console.log(data)
           res.locals.diagrams = data
           return next();
         })
@@ -44,7 +47,6 @@ module.exports = {
   updateDiagram: (req, res, next) => {
     try {
       const { diagramId, user, diagramName, reactFlowData } = req.body
-      console.log(diagramId);
       if (diagramId) {
         Diagram.findOneAndUpdate(
           { _id: diagramId },

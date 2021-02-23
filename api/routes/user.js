@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const userService = require('../db/services/user');
+const diagramController = require('../db/services/diagrams');
 
 let JWT_KEY;
 
@@ -29,9 +30,20 @@ router.use((req, res, next) => {
     })
 })
 
-router.get('/', async (req, res) => {
-    user = await userService.findById(req.user.id)
-    res.send(user);
-})
+router.get('/', async (req, res, next) => {
+        res.locals.user = await userService.findById(req.user.id)
+        console.log('res.locals.user: ', res.locals.user);
+        return next();
+    },
+    diagramController.getAllDiagrams,
+    (req, res, next) => {
+        // spread in our values from res.locals.user 
+        // _doc avoids spreading in system key value pairs
+        const data = {
+            ...res.locals.user._doc,
+            diagrams: res.locals.diagrams
+        }
+        res.status(200).json(data)
+    });
 
 module.exports = router;
