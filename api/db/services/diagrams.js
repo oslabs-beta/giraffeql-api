@@ -33,7 +33,7 @@ module.exports = {
   },
   deleteDiagram: (req, res, next) => {
     try {
-      const { diagramId } = req.body;
+      const { diagramId } = req.params;
       Diagram.findOneAndDelete({ _id: diagramId })
         .then((data) => {
           res.locals.diagram = data;
