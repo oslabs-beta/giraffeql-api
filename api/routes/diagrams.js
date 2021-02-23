@@ -16,7 +16,7 @@ router.get('/:user',
     diagrams: res.locals.diagrams
   }))
 
-router.delete('/',
+router.delete('/:diagramId',
   diagramController.deleteDiagram,
   (req, res) => res.status(200).json({
     diagram: res.locals.diagram
