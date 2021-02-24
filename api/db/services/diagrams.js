@@ -21,9 +21,8 @@ module.exports = {
   },
   getAllDiagrams: (req, res, next) => {
     try {
-      let user = req.params.user || res.locals.user._id
-      console.log(user)
-      // const { user } = req.params || res.locals.user._id;
+      let user = req.params.user || res.locals.diagram.user
+      if (!user) return res.status(400).send('missing necessary data');
       Diagram.find({ user: user })
         .then((data) => {
           res.locals.diagrams = data
@@ -36,9 +35,12 @@ module.exports = {
   deleteDiagram: (req, res, next) => {
     try {
       const { diagramId } = req.params;
+      console.log('diagramId in deleteDiagram: ', diagramId)
       Diagram.findOneAndDelete({ _id: diagramId })
         .then((data) => {
+          if (!data) return res.status(204).send('no data found)')
           res.locals.diagram = data;
+          console.log(data);
           return next();
         })
     } catch(err) {

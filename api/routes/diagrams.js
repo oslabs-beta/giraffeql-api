@@ -18,8 +18,9 @@ router.get('/:user',
 
 router.delete('/:diagramId',
   diagramController.deleteDiagram,
+  diagramController.getAllDiagrams,
   (req, res) => res.status(200).json({
-    diagram: res.locals.diagram
+    diagrams: res.locals.diagrams
   }));
 
 router.put('/favorite/:diagramId',
