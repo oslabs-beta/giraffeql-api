@@ -3,10 +3,11 @@ const Diagram = require('../models/diagram');
 module.exports = {
   addDiagram: (req, res, next) => {
     try {
-      const { user, diagramName, tables, position } = req.body;
+      const { user, diagramName, tables, position, description } = req.body;
       Diagram.create({
         user: user,
         diagramName: diagramName,
+        description: description,
         createdAt: Date.now(),
         updatedAt: Date.now(),
         reactFlowData: tables,
@@ -50,13 +51,14 @@ module.exports = {
   },
   updateDiagram: (req, res, next) => {
     try {
-      const { diagramId, user, diagramName, tables } = req.body
+      const { diagramId, user, diagramName, tables, description } = req.body
       if (diagramId) {
         Diagram.findOneAndUpdate(
           { _id: diagramId },
           {
             user: user,
             diagramName: diagramName,
+            description: description,
             updatedAt: Date.now(),
             tables: tables
           },
@@ -69,10 +71,11 @@ module.exports = {
             return next();
           })
       } else {
-        const { user, diagramName, tables } = req.body;
+        const { user, diagramName, tables, description } = req.body;
         Diagram.create({
           user: user,
           diagramName: diagramName,
+          description: description,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           tables: tables,
