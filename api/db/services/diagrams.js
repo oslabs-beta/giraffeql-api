@@ -3,7 +3,7 @@ const Diagram = require('../models/diagram');
 module.exports = {
   addDiagram: (req, res, next) => {
     try {
-      const { user, diagramName, tables, position } = req.body;
+      const { user, diagramName, tables, position, description } = req.body;
       Diagram.create({
         user: user,
         diagramName: diagramName,
@@ -21,7 +21,9 @@ module.exports = {
   },
   getAllDiagrams: (req, res, next) => {
     try {
-      let user = req.params.user || res.locals.diagram.user
+      let user;
+      if (Object.keys(res.locals).includes('user')) user = res.locals.user._id;
+      else user = req.params.user || res.locals.diagram.user;
       if (!user) return res.status(400).send('missing necessary data');
       Diagram.find({ user: user })
         .then((data) => {
@@ -50,7 +52,7 @@ module.exports = {
   },
   updateDiagram: (req, res, next) => {
     try {
-      const { diagramId, user, diagramName, tables } = req.body
+      const { diagramId, user, diagramName, tables, description } = req.body;
       if (diagramId) {
         Diagram.findOneAndUpdate(
           { _id: diagramId },
@@ -69,10 +71,11 @@ module.exports = {
             return next();
           })
       } else {
-        const { user, diagramName, tables } = req.body;
+        const { user, diagramName, tables, description } = req.body;
         Diagram.create({
           user: user,
           diagramName: diagramName,
+          description: description,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           tables: tables,
