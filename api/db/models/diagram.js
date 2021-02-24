@@ -15,9 +15,6 @@ const diagramSchema = new Schema({
   updatedAt: {
     type: "Date"
   },
-  description: {
-    type: "String"
-  },
   tables: [
     {
       name: "String",
