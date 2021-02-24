@@ -73,13 +73,33 @@ module.exports = {
           diagramName: diagramName,
           createdAt: Date.now(),
           updatedAt: Date.now(),
-          tables: tables
+          tables: tables,
+          favorite: false
         }).then((data) => {
           res.locals.diagram = data;
           return next();
         });
       }
       
+    } catch(err) {
+      return next(err);
+    }
+  },
+  toggleFavorite: async (req, res, next) => {
+    try {
+      const { diagramId } = req.params;
+      console.log('diagramId :', diagramId)
+      const diagram = await Diagram.findById(diagramId);
+      console.log('diagram :', diagram)
+      if (!diagram) return res.status(204).send('no data found');
+      const newFav = !diagram.favorite;
+      console.log(newFav);
+      Diagram.findOneAndUpdate({ _id: diagramId }, 
+        { favorite: newFav },
+        { new: true}).then(data => {
+          res.locals.diagram = data;
+          return next();
+        });
     } catch(err) {
       return next(err);
     }

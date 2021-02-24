@@ -34,7 +34,10 @@ const diagramSchema = new Schema({
         y: "Number"
       }
     }
-  ]
+  ],
+  favorite: {
+    type: "Boolean"
+  }
 });
 
 module.exports = mongoose.models.Diagram || mongoose.model('Diagram', diagramSchema);
