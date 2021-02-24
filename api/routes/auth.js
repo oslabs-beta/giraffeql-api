@@ -28,9 +28,7 @@ passport.use(new GitHubStrategy({
   },
 
   function (accessToken, refreshToken, profile, cb) {
-    console.log('GithubStrategy callback called')
     users.findOrCreate(profile);
-    console.log(cb);
     return cb(null, profile);
   }
 ));

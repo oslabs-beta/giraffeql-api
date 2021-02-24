@@ -37,12 +37,10 @@ module.exports = {
   deleteDiagram: (req, res, next) => {
     try {
       const { diagramId } = req.params;
-      console.log('diagramId in deleteDiagram: ', diagramId)
       Diagram.findOneAndDelete({ _id: diagramId })
         .then((data) => {
           if (!data) return res.status(204).send('no data found)')
           res.locals.diagram = data;
-          console.log(data);
           return next();
         })
     } catch(err) {
@@ -93,12 +91,9 @@ module.exports = {
   toggleFavorite: async (req, res, next) => {
     try {
       const { diagramId } = req.params;
-      console.log('diagramId :', diagramId)
       const diagram = await Diagram.findById(diagramId);
-      console.log('diagram :', diagram)
       if (!diagram) return res.status(204).send('no data found');
       const newFav = !diagram.favorite;
-      console.log(newFav);
       Diagram.findOneAndUpdate({ _id: diagramId }, 
         { favorite: newFav },
         { new: true}).then(data => {

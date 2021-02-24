@@ -15,10 +15,7 @@ if (process.env.NODE_ENV === 'development') {
 const router = express()
 
 router.use((req, res, next) => {
-    console.log(req.cookies)
-    const token = req.headers['authorization'] //;req.cookies.authorization;
-    //= req.headers['authorization'];
-    console.log(token)
+    const token = req.headers['authorization']
 
     jwt.verify(token, JWT_KEY, function (err, data) {
         if (err) {
@@ -32,7 +29,6 @@ router.use((req, res, next) => {
 
 router.get('/', async (req, res, next) => {
         res.locals.user = await userService.findById(req.user.id)
-        console.log('res.locals.user: ', res.locals.user);
         return next();
     },
     diagramController.getAllDiagrams,
