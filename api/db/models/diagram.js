@@ -18,17 +18,17 @@ const diagramSchema = new Schema({
   tables: [
     {
       name: "String",
-      columns: {
+      columns: [{
         name: "String",
         dataType: "String",
         required: "Boolean",
         primaryKey: "Boolean"
-      },
-      connections: {
+      }],
+      connections: [{
         originKey: "String",
         destinationTable: "String",
         destinationKey: "String"
-      },
+      }],
       position: {
         x: "Number",
         y: "Number"
