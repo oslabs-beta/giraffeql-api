@@ -22,6 +22,12 @@ router.delete('/:diagramId',
     diagram: res.locals.diagram
   }));
 
+router.put('/favorite/:diagramId',
+  diagramController.toggleFavorite,
+  (req, res) => res.status(200).json({
+    diagram: res.locals.diagram
+  }));
+
 router.put('/',
   diagramController.updateDiagram,
   (req, res) => res.status(200).json({
