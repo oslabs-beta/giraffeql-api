@@ -3,11 +3,14 @@ const Diagram = require('../models/diagram');
 module.exports = {
   addDiagram: (req, res, next) => {
     try {
-      const { user, diagramName, reactFlowData } = req.body;
+      const { user, diagramName, tables, position } = req.body;
       Diagram.create({
         user: user,
         diagramName: diagramName,
-        reactFlowData: reactFlowData
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        reactFlowData: tables,
+        position: position
       }).then((data) => {
         res.locals.diagram = data;
         return next();
@@ -23,7 +26,6 @@ module.exports = {
       // const { user } = req.params || res.locals.user._id;
       Diagram.find({ user: user })
         .then((data) => {
-          console.log(data)
           res.locals.diagrams = data
           return next();
         })
@@ -46,14 +48,15 @@ module.exports = {
   },
   updateDiagram: (req, res, next) => {
     try {
-      const { diagramId, user, diagramName, reactFlowData } = req.body
+      const { diagramId, user, diagramName, tables } = req.body
       if (diagramId) {
         Diagram.findOneAndUpdate(
           { _id: diagramId },
           {
             user: user,
             diagramName: diagramName,
-            reactFlowData: reactFlowData
+            updatedAt: Date.now(),
+            tables: tables
           },
           {
             new: true,
@@ -64,11 +67,13 @@ module.exports = {
             return next();
           })
       } else {
-        const { user, diagramName, reactFlowData } = req.body;
+        const { user, diagramName, tables } = req.body;
         Diagram.create({
           user: user,
           diagramName: diagramName,
-          reactFlowData: reactFlowData
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          tables: tables
         }).then((data) => {
           res.locals.diagram = data;
           return next();

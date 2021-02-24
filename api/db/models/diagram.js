@@ -9,74 +9,32 @@ const diagramSchema = new Schema({
   diagramName: {
     type: "String"
   },
-  reactFlowData: {
-    position: {
-      type: [
-        "Number"
-      ]
-    },
-    zoom: {
-      type: "Number"
-    },
-    tables: [
-      {
-        id: "String",
-        type: { type: "String" },
-        data: {
-          label: {
-            type: { type: "String" },
-            key: "String",
-            ref: "String",
-            props: {
-              children: {
-                type: { type: "String" },
-                key: "String",
-                ref: "String",
-                props: {
-                  id: "String",
-                  nodeid: "Number",
-                  tablename: "String",
-                  columns: [
-                    {
-                      name: "String",
-                      dataType: "String",
-                      required: "Boolean",
-                      primaryKey: "Boolean"
-                    }
-                  ]
-                },
-                _owner: "String",
-                _store: "Mixed"
-              }
-            },
-            _owner: "String",
-            _store: "Mixed"
-          }
-        },
-        position: {
-          x: "String",
-          y: "String"
-        },
-        targetPosition: "String",
-        sourcePosition: "String"
+  createdAt: {
+    type: "Date"
+  },
+  updatedAt: {
+    type: "Date"
+  },
+  tables: [
+    {
+      name: "String",
+      columns: {
+        name: "String",
+        dataType: "String",
+        required: "Boolean",
+        primaryKey: "Boolean"
       },
-    ],
-    connections: [
-      {
-        id: "String",
-        source: "String",
-        sourceHandle: "String",
-        target: "String",
-        targetHandle: "String",
-        animated: "Boolean",
-        style: {
-          stroke: "String",
-          strokeWidth: "String"
-        },
-        type: { type: "String" }
+      connections: {
+        originKey: "String",
+        destinationTable: "String",
+        destinationKey: "String"
+      },
+      position: {
+        x: "Number",
+        y: "Number"
       }
-    ]
-  }
+    }
+  ]
 });
 
 module.exports = mongoose.models.Diagram || mongoose.model('Diagram', diagramSchema);
